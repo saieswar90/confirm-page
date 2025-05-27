@@ -5,15 +5,17 @@
   <title>Redirecting...</title>
   <script>
     window.onload = function () {
-      const hash = window.location.hash;
-      const params = new URLSearchParams(hash.substring(1));
+      const hash = window.location.hash.substring(1); // remove '#'
+      const params = new URLSearchParams(hash);
+
+      const accessToken = params.get("access_token");
       const type = params.get("type");
 
-      if (type === "signup") {
-        // Redirect to confirmation page after signup
+      if (accessToken && type === "signup") {
+        // Redirect to your confirmation page after signup
         window.location.href = "./confirm.html";
-      } else if (type === "recovery") {
-        // Redirect to reset password page
+      } else if (accessToken && type === "recovery") {
+        // Redirect to reset password page if recovery token
         window.location.href = "./reset-password.html" + window.location.hash;
       } else {
         document.body.innerHTML = "<h2>Invalid or expired link</h2>";

@@ -2,28 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Redirecting...</title>
-  <script>
-    window.onload = function () {
-      const hash = window.location.hash.substring(1); // remove '#'
-      const params = new URLSearchParams(hash);
-
-      const accessToken = params.get("access_token");
-      const type = params.get("type");
-
-      if (accessToken && type === "signup") {
-        // Redirect to your confirmation page after signup
-        window.location.href = "./confirm.html";
-      } else if (accessToken && type === "recovery") {
-        // Redirect to reset password page if recovery token
-        window.location.href = "./reset-password.html" + window.location.hash;
-      } else {
-        document.body.innerHTML = "<h2>Invalid or expired link</h2>";
-      }
-    };
-  </script>
+  <title>Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
-  <p>Redirecting...</p>
+  <h2>Login</h2>
+  <input type="email" id="email" placeholder="Email" /><br/>
+  <input type="password" id="password" placeholder="Password" /><br/>
+  <button id="login-btn">Login</button>
+  <p><a href="forgot-password.html">Forgot Password?</a></p>
+
+  <div id="message"></div>
+
+  <script>
+    const supabase = supabase.createClient(
+      "https://ztmzccsbmkelwoqftfso.supabase.co",
+      "YOUR_ANON_PUBLIC_KEY"
+    );
+
+    const loginBtn = document.getElementById('login-btn');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const message = document.getElementById('message');
+
+    loginBtn.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        message.innerText = 'Login failed: ' + error.message;
+        message.style.color = 'red';
+      } else {
+        message.innerText = 'Login successful! Redirecting...';
+        message.style.color = 'green';
+        // Redirect to your app page
+        setTimeout(() => {
+          window.location.href = 'dashboard.html'; // change this as needed
+        }, 1500);
+      }
+    });
+  </script>
 </body>
 </html>

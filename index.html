@@ -6,9 +6,15 @@
   <script>
     window.onload = function () {
       const hash = window.location.hash;
-      if (hash.includes("access_token") && hash.includes("type=signup")) {
-        // Redirect to your designed confirmation page
+      const params = new URLSearchParams(hash.substring(1));
+      const type = params.get("type");
+
+      if (type === "signup") {
+        // Redirect to confirmation page after signup
         window.location.href = "./confirm.html";
+      } else if (type === "recovery") {
+        // Redirect to reset password page
+        window.location.href = "./reset-password.html" + window.location.hash;
       } else {
         document.body.innerHTML = "<h2>Invalid or expired link</h2>";
       }

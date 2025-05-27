@@ -45,47 +45,13 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
-    .button {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      color: white;
-      background-color: #4caf50;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .button:hover {
-      background-color: #43a047;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Email Confirmed!</h1>
-    <p>Redirecting to your app...</p>
+    <p>Your email has been successfully confirmed.</p>
     <div class="spinner"></div>
-    <p style="margin-top: 20px;">
-      If your app does not open automatically, tap the button below.
-    </p>
-    <a href="myapp://email-confirmed" class="button">Open My App</a>
   </div>
-
-  <script>
-    // Try to open the app via deep link
-    window.location = "myapp://email-confirmed";
-
-    // Fallback timeout in case deep link fails
-    setTimeout(function () {
-      var answer = confirm("Open app manually?");
-      if (answer) {
-        window.location = "myapp://email-confirmed";
-      }
-    }, 3000);
-  </script>
 </body>
 </html>
